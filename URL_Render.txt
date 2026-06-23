@@ -1,0 +1,6 @@
+URL pública de Render:
+
+PENDIENTE: pegar aquí la URL cuando la aplicación sea publicada.
+
+Ejemplo:
+https://metro-traffic-volume-regression.onrender.com
