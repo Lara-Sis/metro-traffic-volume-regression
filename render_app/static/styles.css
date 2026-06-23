@@ -1,0 +1,137 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    color: #111827;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.card {
+    width: 100%;
+    max-width: 920px;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 32px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+h1 {
+    margin-top: 0;
+    color: #111827;
+    text-align: center;
+}
+
+.intro {
+    text-align: center;
+    color: #4b5563;
+    line-height: 1.6;
+}
+
+.model-info {
+    background: #f3f4f6;
+    border-left: 5px solid #2563eb;
+    padding: 14px 18px;
+    margin: 24px 0;
+    border-radius: 10px;
+}
+
+.model-info p {
+    margin: 6px 0;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+input,
+select {
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+small {
+    margin-top: 5px;
+    color: #6b7280;
+}
+
+.btn {
+    grid-column: 1 / -1;
+    padding: 14px;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: #1d4ed8;
+}
+
+.result-box {
+    margin-top: 24px;
+    padding: 22px;
+    text-align: center;
+    border-radius: 14px;
+    background: #ecfdf5;
+    border: 1px solid #10b981;
+}
+
+.result-box h2 {
+    margin-top: 0;
+    color: #065f46;
+}
+
+.result-number {
+    font-size: 46px;
+    font-weight: bold;
+    color: #047857;
+    margin: 10px 0;
+}
+
+.error-box {
+    background: #fef2f2;
+    border: 1px solid #ef4444;
+    color: #991b1b;
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 18px 0;
+}
+
+@media (max-width: 720px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 22px;
+    }
+}

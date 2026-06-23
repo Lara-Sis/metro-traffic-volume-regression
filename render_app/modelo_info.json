@@ -1,0 +1,19 @@
+{
+    "nombre_proyecto": "Predicción de volumen de tráfico vehicular",
+    "dataset": "Metro Interstate Traffic Volume",
+    "variable_objetivo": "traffic_volume",
+    "unidad_prediccion": "vehículos por hora",
+    "mejor_experimento": "Seleccionadas - RandomForestRegressor",
+    "escenario": "Características seleccionadas",
+    "modelo": "RandomForestRegressor",
+    "features": [
+        "hour",
+        "day_of_week",
+        "is_weekend",
+        "temp",
+        "clouds_all",
+        "weather_main"
+    ],
+    "r2_prueba": 0.9431,
+    "mae_prueba": 274.4385
+}
