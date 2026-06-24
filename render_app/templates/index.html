@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Predicción de Tráfico Vehicular</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <main class="container">
+        <section class="card">
+            <h1>Predicción de volumen de tráfico vehicular</h1>
+
+            <p class="intro">
+                Esta aplicación utiliza un modelo de aprendizaje automático para estimar
+                el volumen horario de tráfico vehicular en la carretera I-94.
+            </p>
+
+            <div class="model-info">
+                <p><strong>Modelo:</strong> {{ modelo_info.modelo }}</p>
+                <p><strong>Escenario:</strong> {{ modelo_info.escenario }}</p>
+                <p><strong>Variable objetivo:</strong> {{ modelo_info.variable_objetivo }}</p>
+                <p><strong>Unidad del resultado:</strong> vehículos por hora</p>
+            </div>
+
+            {% if errores %}
+                <div class="error-box">
+                    <strong>Revisa los siguientes puntos:</strong>
+                    <ul>
+                        {% for error in errores %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <form method="POST" class="form-grid">
+                <div class="form-group">
+                    <label for="hour">Hora del día</label>
+                    <input type="number" id="hour" name="hour" min="0" max="23" value="{{ valores.hour }}" required>
+                    <small>Valor entre 0 y 23.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="day_of_week">Día de la semana</label>
+                    <select id="day_of_week" name="day_of_week" required>
+                        <option value="0" {% if valores.day_of_week == "0" %}selected{% endif %}>Lunes</option>
+                        <option value="1" {% if valores.day_of_week == "1" %}selected{% endif %}>Martes</option>
+                        <option value="2" {% if valores.day_of_week == "2" %}selected{% endif %}>Miércoles</option>
+                        <option value="3" {% if valores.day_of_week == "3" %}selected{% endif %}>Jueves</option>
+                        <option value="4" {% if valores.day_of_week == "4" %}selected{% endif %}>Viernes</option>
+                        <option value="5" {% if valores.day_of_week == "5" %}selected{% endif %}>Sábado</option>
+                        <option value="6" {% if valores.day_of_week == "6" %}selected{% endif %}>Domingo</option>
+                    </select>
+                    <small>0=Lunes, 6=Domingo.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="is_weekend">¿Es fin de semana?</label>
+                    <select id="is_weekend" name="is_weekend" required>
+                        <option value="0" {% if valores.is_weekend == "0" %}selected{% endif %}>No</option>
+                        <option value="1" {% if valores.is_weekend == "1" %}selected{% endif %}>Sí</option>
+                    </select>
+                    <small>Sábado o domingo.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="temp">Temperatura</label>
+                    <input type="number" step="0.01" id="temp" name="temp" value="{{ valores.temp }}" required>
+                    <small>Temperatura en Kelvin. Ejemplo: 285.15 K.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="clouds_all">Nubosidad</label>
+                    <input type="number" step="1" id="clouds_all" name="clouds_all" min="0" max="100" value="{{ valores.clouds_all }}" required>
+                    <small>Porcentaje de nubosidad entre 0 y 100.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="weather_main">Condición climática</label>
+                    <select id="weather_main" name="weather_main" required>
+                        {% for option in weather_options %}
+                            <option value="{{ option }}" {% if valores.weather_main == option %}selected{% endif %}>
+                                {{ option }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <small>Condición climática general.</small>
+                </div>
+
+                <button type="submit" class="btn">Realizar predicción</button>
+            </form>
+
+            {% if resultado is not none %}
+                <div class="result-box">
+                    <h2>Resultado estimado</h2>
+                    <p class="result-number">{{ resultado }}</p>
+                    <p>vehículos por hora</p>
+                </div>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>
