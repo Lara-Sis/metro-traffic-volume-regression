@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request
 import pandas as pd
 import joblib
@@ -32,7 +31,17 @@ WEATHER_OPTIONS = [
     "Squall"
 ]
 
-def validar_entrada(hour, day_of_week, is_weekend, temp, clouds_all, weather_main):
+
+def calcular_is_weekend(day_of_week):
+    """
+    Calcula si el día corresponde a fin de semana.
+    En pandas, day_of_week usa:
+    0 = lunes, 1 = martes, ..., 5 = sábado, 6 = domingo.
+    """
+    return 1 if day_of_week in [5, 6] else 0
+
+
+def validar_entrada(hour, day_of_week, temp, clouds_all, weather_main):
     errores = []
 
     if hour < 0 or hour > 23:
@@ -40,9 +49,6 @@ def validar_entrada(hour, day_of_week, is_weekend, temp, clouds_all, weather_mai
 
     if day_of_week < 0 or day_of_week > 6:
         errores.append("El día de la semana debe estar entre 0 y 6.")
-
-    if is_weekend not in [0, 1]:
-        errores.append("El campo fin de semana debe ser 0 o 1.")
 
     if temp < 230 or temp > 330:
         errores.append("La temperatura debe estar en un rango razonable entre 230 y 330 Kelvin.")
@@ -60,6 +66,7 @@ def validar_entrada(hour, day_of_week, is_weekend, temp, clouds_all, weather_mai
 def index():
     resultado = None
     errores = []
+
     valores = {
         "hour": "8",
         "day_of_week": "0",
@@ -73,7 +80,6 @@ def index():
         valores = {
             "hour": request.form.get("hour", ""),
             "day_of_week": request.form.get("day_of_week", ""),
-            "is_weekend": request.form.get("is_weekend", ""),
             "temp": request.form.get("temp", ""),
             "clouds_all": request.form.get("clouds_all", ""),
             "weather_main": request.form.get("weather_main", "")
@@ -82,15 +88,19 @@ def index():
         try:
             hour = int(valores["hour"])
             day_of_week = int(valores["day_of_week"])
-            is_weekend = int(valores["is_weekend"])
             temp = float(valores["temp"])
             clouds_all = float(valores["clouds_all"])
             weather_main = valores["weather_main"]
 
+            # Calcular automáticamente si es fin de semana
+            is_weekend = calcular_is_weekend(day_of_week)
+
+            # Guardar el valor calculado para mantenerlo disponible en la plantilla
+            valores["is_weekend"] = str(is_weekend)
+
             errores = validar_entrada(
                 hour,
                 day_of_week,
-                is_weekend,
                 temp,
                 clouds_all,
                 weather_main
