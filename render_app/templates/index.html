@@ -57,15 +57,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="is_weekend">¿Es fin de semana?</label>
-                    <select id="is_weekend" name="is_weekend" required>
-                        <option value="0" {% if valores.is_weekend == "0" %}selected{% endif %}>No</option>
-                        <option value="1" {% if valores.is_weekend == "1" %}selected{% endif %}>Sí</option>
-                    </select>
-                    <small>Sábado o domingo.</small>
-                </div>
-
-                <div class="form-group">
                     <label for="temp">Temperatura</label>
                     <input type="number" step="0.01" id="temp" name="temp" value="{{ valores.temp }}" required>
                     <small>Temperatura en Kelvin. Ejemplo: 285.15 K.</small>
